@@ -10,6 +10,7 @@
     <p class="name">{{object.title}}</p>
     <p class="author">{{object.author}} </p>
     <p class="cat">{{object.category}} </p>
+    <p class="desc">{{object.description}} </p>
     <p class="copies">{{book.copies}} Exemplares</p>
     <p class="status">{{book.status}}</p>
 
@@ -41,7 +42,7 @@
         <form class="borrow_form" id="borrow_form" action="{% url 'book:book_borrow' book.pk %}" method="POST">
             {% csrf_token %}
             <label for="return_date">Data para devolução do livro:</label>
-            <input type="date" on="myfun()" class="return_date text_box" id="return_date"
+            <input type="date" onchange="myfun()" class="return_date text_box" id="return_date"
                 title="Escolha a data de devolução do livro" name="return_date" autocomplete="off" required />
             <button type='submit' class="borrow_btn" id="borrow_btn">Empréstimo</button>
         </form>

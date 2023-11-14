@@ -1,11 +1,14 @@
 status_check = document.querySelector(".status");
+datePickerId = document.querySelector("#return_date");
+datePickerId.min = new Date().toISOString().split("T")[0];
+
 
 if (status_check.innerHTML === "Indisponível") {
+  alert("TESTE")
   status_check.style.color = "tomato";
   document.getElementById("borrow_form").style.display = "none";
   document.getElementById("return_btn").style.display = "inline";
-}
-else{
+}else{
   status_check.style.color = "green";
 }
 
