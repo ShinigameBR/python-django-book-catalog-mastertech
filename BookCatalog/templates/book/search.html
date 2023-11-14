@@ -1,0 +1,43 @@
+{% extends "layout/base.html" %}
+{% load static %}
+{% block library %}
+<link rel="stylesheet" href="{% static "book/css/home.css" %}">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+<h3>Resultados da busca</h3>
+<hr>
+{% if user.is_staff %}
+<h3>Usuários</h3>
+
+<div class="cards__container">
+    {% for user in user.all %}
+    <div class="card">
+        <img class="book_img" src="{{user.img.url}}" alt="" />
+        <p class="name">{{user.first_name}}{{user.last_name}}</p>
+        <p class="author">ID {{user.id}}</p>
+        <a href="{% url 'std_profile' user.pk %}" class="book_btn">Ver Mais</a>
+    </div>
+    {% endfor %}
+
+    {% endif %}
+</div>
+<h3>Livros</h3>
+
+<div class="cards__container">
+
+    {% for book in books %}
+
+
+    <div class="card">
+        <img class="book_img" src="{{book.img.url}}" alt="" />
+        <p class="name">{{book.title}}</p>
+        <p class=" author">{{book.author}}</p>
+        <p class="status">{{book.status}}</p>
+        <a href="{%url 'book:book_detail' book.pk %}"><button class="book_btn">Ver Detalhes</button></a>
+    </div>
+    {% endfor %}
+</div>
+<script src="{% static "book/js/book_status.js" %}"></script>
+
+{% endblock library %}

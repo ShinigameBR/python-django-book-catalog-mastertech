@@ -1,0 +1,70 @@
+{% extends "layout/base.html" %}
+{% load static %}
+{% block library %}
+<link rel="stylesheet" href="{% static "book/css/home.css" %}">
+{% if user.is_staff %}
+<h3>Usuários</h3>
+<div class="cards__container">
+    {% for user in users.all %}
+    <div class="std_card card">
+        <img class="std_img" src="{{user.img.url}}" alt="" />
+        <p class="name">{{user.first_name}} {{user.last_name}}</p>
+        <p class="author">ID {{user.id}}</p>
+        <p class="status">Em posse de {{user.books.all.count}} livros</p>
+        <a href="{% url 'std_profile' user.pk %}" class="book_btn">Ver Mais</a>
+    </div>
+    {%endfor%}
+    <a class='category book_btn' href="{% url 'user_list' %}" title="Todos os Usuários">Todos os Usuários</a>
+</div>
+{% endif %}
+
+{% if user.is_authenticated and not user.is_staff %}
+<h3>Livros Emprestados (Atualmente)</h3>
+<div class="cards__container">
+    {% if user.books.all.count < 1 %} <h2 id="no_books">Você ainda não pegou nenhum livro emprestado</h2>
+        {%else%}
+        {% for book in user.books.all %}
+        <div class="card">
+            <img class="book_img" src="{{book.img.url}}" alt="" />
+            <p class="name">{{book.title}}</p>
+            <p class=" author">{{book.author}}</p>
+            <p class="status">{{book.status}}</p>
+            <a href="{%url 'book:book_detail' book.pk %}"><button class="book_btn">Ver Mais</button></a>
+        </div>
+        {% endfor %}
+        {% endif %}
+</div>
+{% endif %}
+
+<h3>Livros</h3>
+<div class="cards__container">
+    {% for book in books|slice:"0:5" %}
+    <div class="card">
+        <img class="book_img" src="{{book.img.url}}" alt="" />
+        <p class="name">{{book.title}}</p>
+        <p class="author">{{book.author}}</p>
+        <p class="author">{{book.copies}} Exemplares</p>
+        <p class="status">{{book.status}}</p>
+        <a href="{%url 'book:book_detail' book.pk %}"><button class="book_btn">Ver Mais</button></a>
+    </div>
+    {% endfor %}
+    <a class='category book_btn' href="{% url 'book:list_book' %}" title="Todos os Livros">Todos os Livros</a>
+</div>
+
+<h3>Categorias</h3>
+<div class="cards__container">
+    {% for category in categories %}
+    <div class="cat_card">
+        <img class="cat_img" src="{{category.img.url}}" alt="" />
+        <p class="cat_name">{{category.title}}</p>
+        <p class="author">{{category.books.count}}</p>
+        <a href="{% url 'category:detail' category.pk %}"><button class="cat_book_btn">Ver Mais</button></a>
+    </div>
+    {% endfor %}
+    <a class='category book_btn' href="{% url 'category:category' %}" title="Todas as Categorias">Todas as Categorias</a>
+</div>
+
+<script src="{% static "book/js/book_status.js" %}"></script>
+
+
+{% endblock library %}

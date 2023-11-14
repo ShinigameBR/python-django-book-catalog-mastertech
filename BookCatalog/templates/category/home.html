@@ -1,0 +1,21 @@
+{% extends "layout/base.html" %}
+{% load static %}
+{% block library %}
+<link rel="stylesheet" href="{% static "book/css/home.css" %}">
+<link rel="stylesheet" href="{% static "administrator/css/delete_edit.css" %}">
+{% if user.is_staff %}
+<a class='edit_btn' href=" {% url 'administrator:add_category' %}">Adicionar Categoria</a>
+{% endif %}
+
+<h3>Todas as Categorias</h3>
+<div class="cards__container">
+    {% for category in categories %}
+    <div class="cat_card">
+        <img class="cat_img" src="{{category.img.url}}" alt="" />
+        <p class="cat_name">{{category.title}}</p>
+        <p class="author">{{category.books.count}}</p>
+        <a href="{% url 'category:detail' category.pk %}"><button class="cat_book_btn">Ver Todas</button></a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock library %}

@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{% static "book/css/base.css" %}">
+    <link rel="shortcut icon" href="{% static "favicon.ico" %}" type="image/x-icon">
+    <title>Cátalogo de Livros</title>
+</head>
+<body>
+    <header>
+        <span class="logo">
+            <a href="{% url 'book:book' %}"><i class="fas fa-book-open logoo"></i></a>
+        </span>
+        <form action="{% url 'book:search' %}" method="post">
+            {% csrf_token %}
+            <div class="search_container">
+                <input type="text" class="search" id="search_id" placeholder="Procure por livros ou autores" name="search"
+                    autocomplete="off" />
+                <button type="submit" class="search_btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+
+        {% if user.is_authenticated%}
+        {% if user.is_staff %}
+        <h4 class="category">Administrador</h4>
+        <!-- <a class='category' href="{% url 'administrator:add_book' %}" title="Adicionar Livro">Adicionar Livro</a> -->
+        {%else%}
+        <!-- <a class='category' href="{% url 'category:category' %}" title="Categoria"></a> -->
+        {% endif %}
+        <a class="profile_btn" style="margin-left: auto;" href="{% url 'std_profile' user.pk %}" title="Ver perfil"><i class="fas fa-user"></i></a>
+        <a class="logout_btn" style="margin-right: 35px;" href="{% url 'logout' %}" title="Sair"><i class="fas fa-sign-out-alt"></i></a>
+        {% else %}
+        <!-- <a class='category' href="{% url 'category:category' %}" title="Categoia"></a> -->
+        <a class='login' style="margin-left: auto;" href="{% url 'login' %}" title="Entrar">Entrar</a>
+        <a class='login' style="margin-right: 35px;" href="{% url 'signup' %}" title="Cadastrar">Cadastrar</a>
+        {% endif %}
+    </header>
+
+    {% block library %}
+
+    {% endblock library %}
+
+</body>
+
+</html>
