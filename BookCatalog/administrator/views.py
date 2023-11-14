@@ -37,7 +37,7 @@ class BookDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class CategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Category
     form_class = CreateCategoryForm
-    template_name = "administrator/add_Category.html"
+    template_name = "administrator/add_category.html"
 
     def test_func(self):
         return self.request.user.is_staff
@@ -46,7 +46,7 @@ class CategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 class CategoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Category
     form_class = CreateCategoryForm
-    template_name = "administrator/edit_Category.html"
+    template_name = "administrator/edit_category.html"
 
     def test_func(self):
         return self.request.user.is_staff
@@ -54,7 +54,7 @@ class CategoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class CategoryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Category
-    template_name = "administrator/delete_Category.html"
+    template_name = "administrator/delete_category.html"
     success_url = reverse_lazy('book:book')
 
     def test_func(self):
